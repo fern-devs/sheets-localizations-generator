@@ -4,6 +4,7 @@
 
 const connector = require('./gsheets-connector');
 const iosGenerator = require('./ios-strings-generator');
+const yii2Generator = require('./yii2-strings-generator');
 
 var platform = process.argv[2];
 var type = process.argv[3];
@@ -21,6 +22,11 @@ var behaviors = {
     },
     info: function(auth) {
       return iosGenerator.generateInfoLocalizations(auth, spreadsheetId, range, path);
+    }
+  },
+  yii2: {
+    strings: function(auth) {
+      return yii2Generator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
   }
 };
