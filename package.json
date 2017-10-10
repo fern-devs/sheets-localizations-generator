@@ -1,0 +1,16 @@
+{
+  "name": "sheets-localizations-generator",
+  "version": "1.0.0",
+  "description": "Google Sheets to localization files",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "IceRock Development",
+  "license": "ISC",
+  "dependencies": {
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^19.0.0"
+  }
+}
