@@ -4,6 +4,7 @@
 
 const connector = require('./gsheets-connector');
 const iosGenerator = require('./ios-strings-generator');
+const androidGenerator = require('./android-strings-generator');
 const yii2Generator = require('./yii2-strings-generator');
 
 var platform = process.argv[2];
@@ -22,6 +23,14 @@ var behaviors = {
     },
     info: function(auth) {
       return iosGenerator.generateInfoLocalizations(auth, spreadsheetId, range, path);
+    }
+  },
+  android: {
+    strings: function(auth) {
+      return androidGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
+    },
+    plurals: function(auth) {
+      return androidGenerator.generatePluralsLocalizations(auth, spreadsheetId, range, path);
     }
   },
   yii2: {
