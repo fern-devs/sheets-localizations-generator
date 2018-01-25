@@ -90,6 +90,9 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
     for (var key in dictionary) {
       var item = dictionary[key];
 
+      item["few"] = item["many"];
+      item["two"] = item["other"];
+
       result += '  <plurals name="' + key + '">\n';
       for (var plural in item) {
         result += '    <item quantity="' + plural + '">' + item[plural] + '</item>\n';
