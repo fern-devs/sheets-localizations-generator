@@ -57,7 +57,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
           fs.mkdirSync(directory);
         }
 
-        fs.writeFileSync(directory + 'strings.xml', "<resources>\n" + content + "</resources>\n");
+        fs.writeFileSync(directory + 'strings.xml', "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n" + content + "</resources>\n");
       }
     }
   });
@@ -85,7 +85,8 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
       </plurals>
     </resources>
      */
-    var result = '<resources>\n';
+    var result = '<?xml version="1.0" encoding="utf-8"?>\n';
+    result += '<resources>\n';
 
     for (var key in dictionary) {
       var item = dictionary[key];
