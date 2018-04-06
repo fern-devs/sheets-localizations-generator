@@ -1,4 +1,3 @@
-
 var fs = require('fs');
 var google = require('googleapis');
 
@@ -23,6 +22,10 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
 
         var langCode = columns[i];
         var content = "";
+
+        if(langCode.length != 2) {
+            continue;
+        }
 
         if(langCode == "en") {
           langCode = "Base";
