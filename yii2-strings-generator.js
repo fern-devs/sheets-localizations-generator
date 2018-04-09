@@ -1,4 +1,3 @@
-
 var fs = require('fs');
 var google = require('googleapis');
 
@@ -50,7 +49,7 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
 
         Object.keys(categories).forEach(function(category) {
           var content = categories[category];
-          content = "return [\n" + content + "];\n";
+          content = "<?php\nreturn [\n" + content + "];\n";
           fs.writeFile(path + langCode + '/' + category + ".php", content);
         });
       }
