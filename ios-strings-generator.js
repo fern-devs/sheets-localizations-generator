@@ -51,7 +51,7 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
           console.log('[%s] %s = %s', langCode, key, string);
         }
 
-        fs.writeFile(path + langCode + '.lproj/Localizable.strings', content);
+        fs.writeFileSync(path + langCode + '.lproj/Localizable.strings', content);
       }
     }
   });
@@ -145,7 +145,7 @@ module.exports.generatePluralsLocalizations = function(auth, spreadsheetId, rang
           console.log('[%s] %s-%s = %s', langCode, key, plural, string);
         }
 
-        fs.writeFile(path + langCode + '.lproj/Localizable.stringsdict.plist', fileContentFromDictionary(content));
+        fs.writeFileSync(path + langCode + '.lproj/Localizable.stringsdict.plist', fileContentFromDictionary(content));
       }
     }
   });
@@ -197,7 +197,7 @@ module.exports.generateInfoLocalizations = function(auth, spreadsheetId, range, 
           console.log('[%s] %s = %s', langCode, key, string);
         }
 
-        fs.writeFile(path + langCode + '.lproj/InfoPlist.strings', content);
+        fs.writeFileSync(path + langCode + '.lproj/InfoPlist.strings', content);
       }
     }
   });
