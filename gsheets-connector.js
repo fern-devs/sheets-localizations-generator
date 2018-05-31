@@ -83,7 +83,8 @@ function storeToken(token) {
       throw err;
     }
   }
-  fs.writeFile(TOKEN_PATH, JSON.stringify(token));
+  console.log('Trying to save token ' + JSON.stringify(token) + ' to ' + TOKEN_PATH);
+  fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
   console.log('Token stored to ' + TOKEN_PATH);
 }
 
