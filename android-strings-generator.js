@@ -72,31 +72,68 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
     }
     data[plural] = value;
   };
-  var fileContentFromDictionary = function (dictionary) {
-    /*
-    <resources>
-       <plurals name="battles_uncounted">
-          <item quantity="zero">battles</item>
-          <item quantity="one">battle</item>
-          <item quantity="two">battles</item>
-          <item quantity="few">battles</item>
-          <item quantity="many">battles</item>
-          <item quantity="other">battles</item>
-      </plurals>
-    </resources>
-     */
+
+  /**
+   * Подготавливает содержимое для файла plurals.xml.
+   *
+   * @param {array} dictionary - словарь plural значений.
+   * @param {string} lang - локализация. Например - 'en' || 'ru'.
+   *
+   * <b>Правила склонения могут отличаться у разных языков, но примерно следуют такой схеме:</b>
+   * <ul>
+   * <li> zero — строка для нуля, отсутствия чего-либо; в некоторых языках — ещё и для чисел, оканчивающихся нулём;</li>
+   * <li> one —  строка для чисел, заканчивающихся на единицу; в некоторых языках — только для единицы;</li>
+   * <li> two — для чисел, заканчивающихся на двойку, или только для двойки;</li>
+   * <li> few — здесь, под словом «несколько», уже не скрывается конкретики, обработка полностью зависит от языковых правил;
+   * например, для русского языка это относится к числам, оканчивающимся на 2, 3 и 4 (именно так, несмотря на наличие правила «two»);</li>
+   * <li> many — аналогично, «неконкретная» категория, можно понимать её как «нечто побольше few»; в русском языке — от пятёрки и выше;</li>
+   * <li> other — всё остальное.</li>
+   * <ul>
+   *
+   * @Note для русского языка не нужно добавлять значения zero и two - это приводит к ошибкам склонения.
+   *
+   * @example
+   * <resources>
+   *     <plurals name="battles_uncounted">
+   *          <item quantity="one">батл</item>
+   *          <item quantity="few">батла</item>
+   *          <item quantity="many">батлов</item>
+   *          <item quantity="other">батлов</item>
+   *     </plurals>
+   * </resources>
+   *
+   * @example
+   * <resources>
+   *     <plurals name="battles_uncounted">
+   *         <item quantity="zero">battles</item>
+   *         <item quantity="one">battle</item>
+   *         <item quantity="two">battles</item>
+   *         <item quantity="few">battles</item>
+   *         <item quantity="many">battles</item>
+   *         <item quantity="other">battles</item>
+   *     </plurals>
+   * </resources>
+   */
+  var fileContentFromDictionary = function (dictionary, lang) {
     var result = '<?xml version="1.0" encoding="utf-8"?>\n';
     result += '<resources>\n';
 
     for (var key in dictionary) {
       var item = dictionary[key];
 
-      item["few"] = item["many"];
+      if (lang === 'ru') {
+        item["few"] = item["other"];
+        item["other"] = item["many"];
+      } else {
+        item["few"] = item["many"];
+      }
       item["two"] = item["other"];
 
       result += '  <plurals name="' + key + '">\n';
       for (var plural in item) {
-        result += '    <item quantity="' + plural + '">' + item[plural] + '</item>\n';
+        if (!(lang === 'ru' && (plural === 'zero' || plural === 'two'))) {
+          result += '    <item quantity="' + plural + '">' + item[plural] + '</item>\n';
+        }
       }
       result += '  </plurals>\n';
     }
@@ -150,7 +187,7 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
           fs.mkdirSync(directory);
         }
 
-        fs.writeFileSync(directory + 'plurals.xml', fileContentFromDictionary(content));
+        fs.writeFileSync(directory + 'plurals.xml', fileContentFromDictionary(content, langCode));
       }
     }
   });
