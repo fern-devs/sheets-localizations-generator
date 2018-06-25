@@ -122,7 +122,7 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
     for (var key in dictionary) {
       var item = dictionary[key];
 
-      if (lang === 'ru') {
+      if (isRussian) {
         item["few"] = item["other"];
         item["other"] = item["many"];
       } else {
