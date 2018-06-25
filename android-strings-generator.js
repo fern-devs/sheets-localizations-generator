@@ -115,6 +115,7 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
    * </resources>
    */
   var fileContentFromDictionary = function (dictionary, lang) {
+    var isRussian = lang === 'ru';
     var result = '<?xml version="1.0" encoding="utf-8"?>\n';
     result += '<resources>\n';
 
@@ -131,9 +132,9 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
 
       result += '  <plurals name="' + key + '">\n';
       for (var plural in item) {
-        if (!(lang === 'ru' && (plural === 'zero' || plural === 'two'))) {
-          result += '    <item quantity="' + plural + '">' + item[plural] + '</item>\n';
-        }
+        var isInvalidRussianPlural = (plural === 'zero' || plural === 'two');
+        if (isRussian && isInvalidRussianPlural) continue;
+        result += '    <item quantity="' + plural + '">' + item[plural] + '</item>\n';
       }
       result += '  </plurals>\n';
     }
