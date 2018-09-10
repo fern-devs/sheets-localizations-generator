@@ -23,7 +23,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
         var langCode = columns[i];
         var content = "";
 
-        if (langCode == "en") {
+        if (langCode == "Base") {
           langCode = undefined;
         }
 
@@ -165,7 +165,7 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
         var langCode = columns[i];
         var content = {};
 
-        if (langCode == "en") {
+        if (langCode == "Base") {
           langCode = undefined;
         }
 

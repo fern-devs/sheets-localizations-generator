@@ -23,14 +23,6 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
         var langCode = columns[i];
         var content = "";
 
-        if(langCode.length != 2) {
-            continue;
-        }
-
-        if(langCode == "en") {
-          langCode = "Base";
-        }
-
         for (var j = 1; j < rows.length; j++) {
           var row = rows[j];
           var key = row[0];
@@ -130,10 +122,6 @@ module.exports.generatePluralsLocalizations = function(auth, spreadsheetId, rang
         var langCode = columns[i];
         var content = {};
 
-        if(langCode == "en") {
-          langCode = "Base";
-        }
-
         for (var j = 1; j < rows.length; j++) {
           var row = rows[j];
           var key = row[0];
@@ -172,10 +160,6 @@ module.exports.generateInfoLocalizations = function(auth, spreadsheetId, range, 
 
         var langCode = columns[i];
         var content = "";
-
-        if(langCode == "en") {
-          langCode = "Base";
-        }
 
         for (var j = 1; j < rows.length; j++) {
           var row = rows[j];
