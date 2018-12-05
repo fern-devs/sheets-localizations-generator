@@ -1,5 +1,6 @@
 var fs = require('fs');
 var google = require('googleapis');
+var utils = require('./utils');
 
 module.exports.generateStringsLocalizations = function(auth, spreadsheetId, range, path) {
   var sheets = google.sheets('v4');
@@ -31,6 +32,8 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
           if (key == null) {
             key = "";
           }
+
+          key = utils.checkPlatformKey(key, "ios")
 
           if (key.startsWith("//")) {
             content += key;
@@ -128,6 +131,8 @@ module.exports.generatePluralsLocalizations = function(auth, spreadsheetId, rang
           var plural = row[1];
           var string = row[i];
 
+          key = utils.checkPlatformKey(key, "ios")
+
           appendDataToDict(content, key, plural, string);
 
           console.log('[%s] %s-%s = %s', langCode, key, plural, string);
@@ -169,6 +174,8 @@ module.exports.generateInfoLocalizations = function(auth, spreadsheetId, range, 
           if (key == null) {
             key = "";
           }
+
+          key = utils.checkPlatformKey(key, "ios")
 
           if (key.startsWith("//")) {
             content += key;

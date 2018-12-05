@@ -1,5 +1,6 @@
 var fs = require('fs');
 var google = require('googleapis');
+var utils = require('./utils');
 
 module.exports.generateStringsLocalizations = function (auth, spreadsheetId, range, path) {
   var sheets = google.sheets('v4');
@@ -35,6 +36,8 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
           if (key == null) {
             key = "";
           }
+
+          key = utils.checkPlatformKey(key, "android")
 
           if (key.startsWith("//")) {
             content += '\n\t<!--' + key.replace(/\/\//g, "") + '-->\n';
@@ -122,14 +125,6 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
     for (var key in dictionary) {
       var item = dictionary[key];
 
-      if (isRussian) {
-        item["few"] = item["other"];
-        item["other"] = item["many"];
-      } else {
-        item["few"] = item["many"];
-      }
-      item["two"] = item["other"];
-
       result += '  <plurals name="' + key + '">\n';
       for (var plural in item) {
         var isInvalidRussianPlural = (plural === 'zero' || plural === 'two');
@@ -176,6 +171,8 @@ module.exports.generatePluralsLocalizations = function (auth, spreadsheetId, ran
           var string = row[i];
 
           if (key != null && key.length > 0) {
+            key = utils.checkPlatformKey(key, "android")
+
             appendDataToDict(content, key, plural, string);
           }
 
