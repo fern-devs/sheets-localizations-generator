@@ -45,8 +45,12 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
 
           console.log('[%s] %s = %s', langCode, key, string);
         }
-
-        fs.writeFileSync(path + langCode + '.lproj/Localizable.strings', content);
+        
+        if (key.startsWith("Android")) {
+            //Skip. Hotfix for mother time localization
+        } else {
+            fs.writeFileSync(path + langCode + '.lproj/Localizable.strings', content);
+        }
       }
     }
   });
