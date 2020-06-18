@@ -46,7 +46,7 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
           console.log('[%s] %s = %s', langCode, key, string);
         }
         
-        if (key.startsWith("Android")) {
+        if (langCode.startsWith("Android")) {
             //Skip. Hotfix for mother time localization
         } else {
             fs.writeFileSync(path + langCode + '.lproj/Localizable.strings', content);
