@@ -27,6 +27,9 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
         if (langCode == "Base") {
           langCode = undefined;
         }
+        if(langCode == "pt-BR") {
+          langCode = "pt-rBR";
+        }
 
         for (var j = 1; j < rows.length; j++) {
           var row = rows[j];
