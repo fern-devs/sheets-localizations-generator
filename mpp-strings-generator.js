@@ -40,6 +40,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
           if (key.startsWith("//")) {
             content += '\n\t<!--' + key.replace(/\/\//g, "") + '-->\n';
           } else if (key.length > 0 && string != null && string.length > 0) {
+            string = string.replace(/&/g, "&amp;");
             string = string.replace(/%@/g, "%s");
             string = string.replace(/\\r/g, "");
             string = string.replace(/→/g, "\u2192");
