@@ -33,7 +33,10 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
             key = "";
           }
 
-          key = utils.checkPlatformKey(key, "ios")
+          key = utils.checkPlatformKey(key, "ios");
+          if(string != undefined) {
+            string = string.replace(/\n/g, "\\n");
+          }
 
           if (key.startsWith("//")) {
             content += key;
@@ -49,7 +52,9 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
         if (langCode.startsWith("Android")) {
             //Skip. Hotfix for mother time localization
         } else {
-            fs.writeFileSync(path + langCode + '.lproj/Localizable.strings', content);
+            var directory = path + langCode + '.lproj';
+            if(!fs.existsSync(directory)) fs.mkdirSync(directory)
+            fs.writeFileSync(directory + '/Localizable.strings', content);
         }
       }
     }
@@ -142,7 +147,9 @@ module.exports.generatePluralsLocalizations = function(auth, spreadsheetId, rang
           console.log('[%s] %s-%s = %s', langCode, key, plural, string);
         }
 
-        fs.writeFileSync(path + langCode + '.lproj/Localizable.stringsdict.plist', fileContentFromDictionary(content));
+        var directory = path + langCode + '.lproj';
+        if(!fs.existsSync(directory)) fs.mkdirSync(directory)
+        fs.writeFileSync(directory + '/Localizable.stringsdict.plist', fileContentFromDictionary(content));
       }
     }
   });
@@ -192,7 +199,9 @@ module.exports.generateInfoLocalizations = function(auth, spreadsheetId, range, 
           console.log('[%s] %s = %s', langCode, key, string);
         }
 
-        fs.writeFileSync(path + langCode + '.lproj/InfoPlist.strings', content);
+        var directory = path + langCode + '.lproj';
+        if(!fs.existsSync(directory)) fs.mkdirSync(directory)
+        fs.writeFileSync(directory + '/InfoPlist.strings', content);
       }
     }
   });
