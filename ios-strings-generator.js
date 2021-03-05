@@ -36,6 +36,7 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
           key = utils.checkPlatformKey(key, "ios");
           if(string != undefined) {
             string = string.replace(/\n/g, "\\n");
+            string = string.replace(/"/g, "\\\"");
           }
 
           if (key.startsWith("//")) {
