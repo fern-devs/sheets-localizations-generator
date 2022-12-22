@@ -7,6 +7,7 @@ const iosGenerator = require('./ios-strings-generator');
 const androidGenerator = require('./android-strings-generator');
 const mppGenerator = require('./mpp-strings-generator');
 const yii2Generator = require('./yii2-strings-generator');
+const ktorGenerator = require('./ktor-strings-generator');
 
 var platform = process.argv[2];
 var type = process.argv[3];
@@ -45,6 +46,11 @@ var behaviors = {
   yii2: {
     strings: function(auth) {
       return yii2Generator.generateStringsLocalizations(auth, spreadsheetId, range, path);
+    }
+  },
+  ktor: {
+    strings: function (auth) {
+      return ktorGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
   }
 };
