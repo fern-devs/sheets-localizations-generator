@@ -1,13 +1,5 @@
 const fs = require("fs");
-const mkdirp = require("mkdirp");
 const google = require("googleapis");
-const utils = require("./utils");
-
-const snakeToCamel = str => str.toLowerCase().replace(/([_][a-z])/g, group =>
-  group
-    .toUpperCase()
-    .replace("_", "")
-);
 
 module.exports.generateStringsLocalizations = function(auth, spreadsheetId, range, path) {
   const sheets = google.sheets("v4");

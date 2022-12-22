@@ -9,6 +9,7 @@ const mppGenerator = require("./mpp-strings-generator");
 const yii2Generator = require("./yii2-strings-generator");
 const ktorGenerator = require("./ktor-strings-generator");
 const rnwGenerator = require("./rnw-strings-generator");
+const adminToolKitGenerator = require('./admintoolkit-strings-generator');
 
 var platform = process.argv[2];
 var type = process.argv[3];
@@ -57,6 +58,11 @@ var behaviors = {
   rnw: {
     strings: function(auth) {
       return rnwGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
+    }
+  },
+  admintoolkit: {
+    strings: function(auth) {
+      return adminToolKitGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
   }
 };
