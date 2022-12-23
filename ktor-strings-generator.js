@@ -29,7 +29,10 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
             for (let i = 2; i < columns.length; i++) {
 
                 const langCode = columns[i];
-                let content = "";
+                let content = 'msgid ""\n' +
+                'msgstr ""\n' + 
+                '"Language: jp\\n"\n' +
+                '"Content-Type: text/plain; charset=UTF-8\\n"\n\n';
                 let templateContent = "";
                 let kotlinContent = "package com.icerockdev.common.i18n\n\n" +
                     "object LK {\n";
