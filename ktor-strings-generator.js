@@ -65,14 +65,14 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
                         templateContent += line;
                         kotlinContent += "\n    " + key + "\n";
                     } else if (key.length > 0) {
-                        const keyLine = "msgid \"" + untranslated + "\"\n";
+                        const keyLine = "msgid \"" + key + "\"\n";
                         content += keyLine;
                         content += "msgstr \"" + string + "\"\n";
 
                         templateContent += keyLine;
                         templateContent += "msgstr \"\"\n";
 
-                        kotlinContent += "    const val " + snakeToCamel(key) + " = \"" + untranslated + "\"\n";
+                        kotlinContent += "    const val " + snakeToCamel(key) + " = \"" + key + "\"\n";
                     }
 
                     content += "\n";
