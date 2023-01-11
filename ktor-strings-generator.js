@@ -40,7 +40,6 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
                 for (let j = 1; j < rows.length; j++) {
                     const row = rows[j];
                     let key = row[0];
-                    let untranslated = row[1];
                     let string = row[i];
 
                     if (key == null) {
@@ -48,15 +47,12 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
                     }
 
                     if (string != undefined) {
+                        string = string.replace(/\r\n/g, "\\n");
                         string = string.replace(/\n/g, "\\n");
                         string = string.replace(/"/g, "\\\"");
                     }
                     if (string == undefined) {
                         string = "";
-                    }
-                    if (untranslated != undefined) {
-                        untranslated = untranslated.replace(/\n/g, "\\n");
-                        untranslated = untranslated.replace(/"/g, "\\\"");
                     }
 
                     if (key.startsWith("//")) {
