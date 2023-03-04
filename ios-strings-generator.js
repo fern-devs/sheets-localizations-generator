@@ -37,6 +37,8 @@ module.exports.generateStringsLocalizations = function(auth, spreadsheetId, rang
           if(string != undefined) {
             string = string.replace(/\n/g, "\\n");
             string = string.replace(/"/g, "\\\"");
+            string = string.replace(/%s/g, "%@");
+            string = string.replace(/%d/g, "%@");
           }
 
           if (key.startsWith("//")) {
