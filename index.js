@@ -10,6 +10,7 @@ const yii2Generator = require("./yii2-strings-generator");
 const ktorGenerator = require("./ktor-strings-generator");
 const rnwGenerator = require("./rnw-strings-generator");
 const adminToolKitGenerator = require('./admintoolkit-strings-generator');
+const nodeGenerator = require("./node-strings-generator");
 
 var platform = process.argv[2];
 var type = process.argv[3];
@@ -19,59 +20,64 @@ var path = process.argv[6];
 
 var behaviors = {
   ios: {
-    strings: function(auth) {
+    strings: function (auth) {
       return iosGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     },
-    plurals: function(auth) {
+    plurals: function (auth) {
       return iosGenerator.generatePluralsLocalizations(auth, spreadsheetId, range, path);
     },
-    info: function(auth) {
+    info: function (auth) {
       return iosGenerator.generateInfoLocalizations(auth, spreadsheetId, range, path);
     }
   },
   android: {
-    strings: function(auth) {
+    strings: function (auth) {
       return androidGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     },
-    plurals: function(auth) {
+    plurals: function (auth) {
       return androidGenerator.generatePluralsLocalizations(auth, spreadsheetId, range, path);
     }
   },
   mpp: {
-    strings: function(auth) {
+    strings: function (auth) {
       return mppGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     },
-    plurals: function(auth) {
+    plurals: function (auth) {
       return mppGenerator.generatePluralsLocalizations(auth, spreadsheetId, range, path);
     }
   },
   yii2: {
-    strings: function(auth) {
+    strings: function (auth) {
       return yii2Generator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
   },
   ktor: {
-    strings: function(auth) {
+    strings: function (auth) {
       return ktorGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
   },
   rnw: {
-    strings: function(auth) {
+    strings: function (auth) {
       return rnwGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
   },
   admintoolkit: {
-    strings: function(auth) {
+    strings: function (auth) {
       return adminToolKitGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
-  }
+  },
+  node: {
+    strings: function (auth) {
+      return nodeGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
+    }
+  },
 };
 
-connector.connect(function(auth) {
+connector.connect(function (auth) {
   var behavior = behaviors[platform];
   if (behavior === undefined) {
     console.log("Unknown platform: " + platform + ". Available:\n");
-    Object.keys(behaviors).forEach(function(item) {
+    Object.keys(behaviors).forEach(function (item) {
       console.log(item);
     });
     return;
@@ -80,7 +86,7 @@ connector.connect(function(auth) {
   var action = behavior[type];
   if (action === undefined) {
     console.log("Unknown type: " + type + ". Available:\n");
-    Object.keys(behavior).forEach(function(item) {
+    Object.keys(behavior).forEach(function (item) {
       console.log(item);
     });
     return;
