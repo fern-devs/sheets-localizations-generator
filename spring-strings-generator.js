@@ -29,11 +29,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
       for (let i = 1; i < columns.length; i++) {
 
         const langCode = columns[i];
-        let content = 'msgid ""\n' +
-          'msgstr ""\n' +
-          '"Language: ' + langCode + '\\n"\n' +
-          '"Content-Type: text/plain; charset=UTF-8\\n"\n\n';
-        let templateContent = "";
+        let content = "";
         let kotlinContent = "package com.icerockdev.i18n\n\n" +
           "object LK {\n";
 
@@ -56,35 +52,26 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
           }
 
           if (key.startsWith("//")) {
-            const line = key.replace("//", "#") + "\n";
+            const line = "\n" + key.replace("//", "#") + "\n";
             content += line;
-            templateContent += line;
             kotlinContent += "\n    " + key + "\n";
           } else if (key.length > 0) {
-            const keyLine = "msgid \"" + key + "\"\n";
-            content += keyLine;
-            content += "msgstr \"" + string + "\"\n";
-
-            templateContent += keyLine;
-            templateContent += "msgstr \"\"\n";
-
+            content += `${key}=${string}`
             kotlinContent += "    const val " + snakeToCamel(key) + " = \"" + key + "\"\n";
           }
 
           content += "\n";
-          templateContent += "\n";
 
           console.log('[%s] %s = %s', langCode, key, string);
         }
 
         kotlinContent += "}\n"
 
-        const directory = path + 'resources/i18n';
+        const directory = path + 'application/src/main/resources/i18n';
         if (!fs.existsSync(directory)) fs.mkdirSync(directory, { recursive: true })
-        fs.writeFileSync(directory + '/messages.pot', templateContent);
-        fs.writeFileSync(directory + '/messages_' + langCode + '.po', content);
+        fs.writeFileSync(directory + '/messages_' + langCode + '.properties', content);
 
-        const sourceDirectory = path + 'kotlin/com/icerockdev/i18n';
+        const sourceDirectory = path + 'common/src/main/kotlin/com/icerockdev/i18n/';
         if (!fs.existsSync(sourceDirectory)) fs.mkdirSync(sourceDirectory, { recursive: true })
         fs.writeFileSync(sourceDirectory + '/LK.kt', kotlinContent);
       }
