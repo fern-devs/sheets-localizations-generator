@@ -8,6 +8,7 @@ const androidGenerator = require("./android-strings-generator");
 const mppGenerator = require("./mpp-strings-generator");
 const yii2Generator = require("./yii2-strings-generator");
 const ktorGenerator = require("./ktor-strings-generator");
+const springGenerator = require("./spring-strings-generator");
 const rnwGenerator = require("./rnw-strings-generator");
 const adminToolKitGenerator = require('./admintoolkit-strings-generator');
 const nodeGenerator = require("./node-strings-generator");
@@ -54,6 +55,11 @@ var behaviors = {
   ktor: {
     strings: function (auth) {
       return ktorGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
+    }
+  },
+  spring: {
+    strings: function (auth) {
+      return springGenerator.generateStringsLocalizations(auth, spreadsheetId, range, path);
     }
   },
   rnw: {
