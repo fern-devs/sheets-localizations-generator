@@ -52,7 +52,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
           }
 
           if (key.startsWith("//")) {
-            const line = key.replace("//", "#") + "\n";
+            const line = "\n" + key.replace("//", "#") + "\n";
             content += line;
             kotlinContent += "\n    " + key + "\n";
           } else if (key.length > 0) {
