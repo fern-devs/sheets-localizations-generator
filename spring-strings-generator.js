@@ -29,6 +29,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
       for (let i = 1; i < columns.length; i++) {
 
         const langCode = columns[i];
+        let baseContent = "";
         let content = "";
         let kotlinContent = "package com.icerockdev.i18n\n\n" +
           "object LK {\n";
@@ -53,14 +54,17 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
 
           if (key.startsWith("//")) {
             const line = "\n" + key.replace("//", "#") + "\n";
-            content += line;
+            content += line
+            if (i == 1 ) baseContent += line
             kotlinContent += "\n    " + key + "\n";
           } else if (key.length > 0) {
             content += `${key}=${string}`
+            if (i == 1 ) baseContent += `${key}=${string}`
             kotlinContent += "    const val " + snakeToCamel(key) + " = \"" + key + "\"\n";
           }
 
-          content += "\n";
+          content += "\n"
+          if (i == 1 ) baseContent += "\n"
 
           console.log('[%s] %s = %s', langCode, key, string);
         }
@@ -69,6 +73,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
 
         const directory = path + 'application/src/main/resources/i18n';
         if (!fs.existsSync(directory)) fs.mkdirSync(directory, { recursive: true })
+        if (i == 1 ) fs.writeFileSync(directory + '/messages.properties', baseContent);
         fs.writeFileSync(directory + '/messages_' + langCode + '.properties', content);
 
         const sourceDirectory = path + 'common/src/main/kotlin/com/icerockdev/i18n/';
