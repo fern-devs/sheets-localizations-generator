@@ -77,17 +77,27 @@ module.exports.generatePluralsLocalizations = function(auth, spreadsheetId, rang
      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
      <plist version="1.0">
      <dict>
-     <key>Comments.Tournaments.System.left</key>
-     <dict>
-     <key>one</key>
-     <string>выбыл из батла</string>
-     <key>zero</key>
-     <string></string>
-     <key>many</key>
-     <string>выбыли из батла</string>
-     <key>other</key>
-     <string>выбыли из батла</string>
-     </dict>
+        <key>Comments.Tournaments.System.left</key>
+        <dict>
+          <key>NSStringLocalizedFormatKey</key>
+          <string>%#@pluraled@</string>
+          <key>pluraled</key>
+          <dict>
+              <key>NSStringFormatSpecTypeKey</key>
+              <string>NSStringPluralRuleType</string>
+              <key>NSStringFormatValueTypeKey</key>
+              <string>d</string>
+              
+              <key>one</key>
+              <string>выбыл из батла</string>
+              <key>zero</key>
+              <string></string>
+              <key>many</key>
+              <string>выбыли из батла</string>
+              <key>other</key>
+              <string>выбыли из батла</string>
+          </dict>
+        </dict>
      </dict>
      </plist>
      */
@@ -97,14 +107,28 @@ module.exports.generatePluralsLocalizations = function(auth, spreadsheetId, rang
     result += '  <dict>\n';
 
     for (var key in dictionary) {
+      if (key == null) continue;
+      if (key.startsWith("//")) continue;
+      if (key.length == 0) continue;
+
       var item = dictionary[key];
 
       result += '    <key>' + key + '</key>\n';
       result += '    <dict>\n';
+      result += '        <key>NSStringLocalizedFormatKey</key>\n';
+      result += '        <string>%#@pluraled@</string>\n';
+      result += '        <key>pluraled</key>\n';
+      result += '        <dict>\n';
+      result += '            <key>NSStringFormatSpecTypeKey</key>\n';
+      result += '            <string>NSStringPluralRuleType</string>\n';
+      result += '            <key>NSStringFormatValueTypeKey</key>\n';
+      result += '            <string>d</string>\n';
+
       for (var plural in item) {
-        result += '      <key>' + plural + '</key>\n';
-        result += '      <string>' + item[plural] + '</string>\n';
+        result += '            <key>' + plural + '</key>\n';
+        result += '            <string>' + item[plural] + '</string>\n';
       }
+      result += '        </dict>\n';
       result += '    </dict>\n';
     }
 
@@ -150,7 +174,7 @@ module.exports.generatePluralsLocalizations = function(auth, spreadsheetId, rang
 
         var directory = path + langCode + '.lproj';
         if(!fs.existsSync(directory)) fs.mkdirSync(directory)
-        fs.writeFileSync(directory + '/Localizable.stringsdict.plist', fileContentFromDictionary(content));
+        fs.writeFileSync(directory + '/Localizable.stringsdict', fileContentFromDictionary(content));
       }
     }
   });
