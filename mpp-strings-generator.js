@@ -43,6 +43,7 @@ module.exports.generateStringsLocalizations = function (auth, spreadsheetId, ran
             string = string.replace(/&/g, "&amp;");
             string = string.replace(/%@/g, "%s");
             string = string.replace(/\\r/g, "");
+            string = string.replace(/\n/g, "\\n");
             string = string.replace(/→/g, "\u2192");
             string = string.replace(/→/g, "\u2192");
             string = string.replace(/\.\.\./g, "&#8230;");
