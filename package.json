@@ -1,5 +1,6 @@
 {
   "name": "sheets-localizations-generator",
+  "version": "1.0.0",
   "module": "index.ts",
   "devDependencies": {
     "@types/bun": "latest"
