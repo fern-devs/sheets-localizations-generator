@@ -1,49 +1,68 @@
 # sheets-localizations-generator
 
-To install dependencies:
+A tool to generate localization files from Google Sheets. This project extracts localization strings from a given Google Sheet and outputs files ready for integration into your application.
+
+## Installation
+
+Ensure you have Bun installed. Then, install the project dependencies by running:
 
 ```bash
 bun install
 ```
 
-To run:
+## Usage
+
+This tool uses Commander.js for command-line argument parsing. To generate localizations, run the following command:
 
 ```bash
-bun run index.ts <SHEET_ID>
+bun run index.ts generate-localizations <sheet-id> <sheet-name> [--output-path <path>]
 ```
 
-### Obtaining the Key File
+Replace `<sheet-id>` with the actual ID of your Google Sheet and `<sheet-name>` with the name of the sheet that contains localization strings. Optionally, use `--output-path` to specify a custom output directory (default is `./locales`).
 
-To generate and configure the required service account key file, follow these steps:
+Example:
+```bash
+bun run index.ts generate-localizations 1A2B3C4D5E MySheet -o ./output
+```
 
-1. **Access Google Cloud Console**  
-   Visit: [https://console.cloud.google.com/](https://console.cloud.google.com/)
+On successful execution, you will see: "Localizations generated successfully".
 
-2. **Create/Select Project**  
-   - Create a new project or select an existing one
+## Google Cloud Service Account Setup
 
-3. **Navigate to Credentials**  
-   - In the left menu: `APIs & Services` → `Credentials`
+This project requires a Google Cloud service account to access the Google Sheet. Follow these steps to generate and configure the required key file:
 
-4. **Create Service Account**  
-   - Click `Create credentials` → `Service account`
-   - Fill in service account details
-   - Click `Create`
+1. **Access Google Cloud Console:**
+   Visit: [Google Cloud Console](https://console.cloud.google.com/)
 
-5. **Assign Permissions**  
-   - On the "Grant this service account access to project" step:
-   - Select the `Viewer` role
-   - Click `Done`
+2. **Create or Select a Project:**
+   Create a new project or select an existing one.
 
-6. **Generate Key File**  
-   - Locate the created service account in the list
-   - Click on it to access details
-   - Go to the `Keys` tab
-   - Click `Add Key` → `Create new key`
-   - Select `JSON` format
-   - Click `Create`
+3. **Navigate to Credentials:**
+   In the left sidebar, go to `APIs & Services` → `Credentials`.
 
-7. **Save and Secure Key**  
-   - The key file will automatically download
-   - Save it in your project folder as `service-account.key.json`
-   - Add `service-account.key.json` to `.gitignore` to prevent accidental exposure
+4. **Create a Service Account:**
+   Click `Create credentials` → `Service account`, then fill in the service account details and click `Create`.
+
+5. **Assign Permissions:**
+   During the process, assign the `Viewer` role to the service account.
+
+6. **Generate the Key File:**
+   - After the service account is created, navigate to the `Keys` tab.
+   - Click `Add Key` → `Create new key`.
+   - Select `JSON` as the key type and click `Create`.
+
+7. **Save the Key File:**
+   The key file will be downloaded automatically. Save it in your project root as `service-account.key.json` and ensure you add it to your `.gitignore` to prevent accidental exposure.
+
+## Additional Notes
+
+- This project is built using Bun. Ensure that Bun is properly configured on your system.
+- For issues related to Google Cloud APIs or Google Sheets, consult the official documentation.
+
+## Contributing
+
+Contributions are welcome! Please submit pull requests or open issues on GitHub to help improve the project.
+
+## License
+
+(Add license information here, if applicable)
