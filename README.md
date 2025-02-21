@@ -15,17 +15,27 @@ bun install
 This tool uses Commander.js for command-line argument parsing. To generate localizations, run the following command:
 
 ```bash
-bun run index.ts generate-localizations <sheet-id> <sheet-name> [--output-path <path>]
+bun index.ts generate-localizations <sheet-id> <sheet-name> [--output-path <path>]
 ```
 
 Replace `<sheet-id>` with the actual ID of your Google Sheet and `<sheet-name>` with the name of the sheet that contains localization strings. Optionally, use `--output-path` to specify a custom output directory (default is `./locales`).
 
 Example:
 ```bash
-bun run index.ts generate-localizations 1A2B3C4D5E MySheet -o ./output
+bun index.ts generate-localizations 1A2B3C4D5E MySheet -o ./output
 ```
 
 On successful execution, you will see: "Localizations generated successfully".
+
+## Запуск из релиза
+
+В релизе доступна предварительно собранная версия localizator.js, предназначенная для запуска с помощью Node.js. Вы можете скачать её на странице релизов этого репозитория. Для использования скачанного файла выполните:
+
+```bash
+node localizator.js generate-localizations <sheet-id> <sheet-name> [--output-path <path>]
+```
+
+Это позволяет запускать инструмент без необходимости предварительной сборки через Bun.
 
 ## Google Cloud Service Account Setup
 
