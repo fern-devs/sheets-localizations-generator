@@ -27,7 +27,7 @@ export async function generateLocalizations(SHEET_ID: string, SHEET_NAME: string
     if (!headers) {
         throw new Error('No headers found in the sheet');
     }
-    const localizations: Localizations = Object.fromEntries(headers.filter(header => header !== 'Key').map(header => [header, []]));
+    const localizations: Localizations = Object.fromEntries(headers.filter(header => header !== 'Key').map(header => [header, {}]));
 
     for (const row of rows) {
         const key = row[0];
@@ -35,9 +35,7 @@ export async function generateLocalizations(SHEET_ID: string, SHEET_NAME: string
             throw new Error('A row is missing a key');
         }
         for (let i = 1; i < headers.length; i++) {
-            localizations[headers[i]].push({
-                [key]: row[i]
-            })
+            localizations[headers[i]][key] = row[i]
         }
     }
 
