@@ -1,7 +1,7 @@
 import { program } from 'commander';
 import { generateLocalizations } from "./src/commands/generate-localizations";
 
-program.version('1.0.0');
+program.version(require('./package.json').version);
 program.description('Localization generator for Google Sheets');
 
 program
